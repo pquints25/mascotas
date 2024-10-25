@@ -124,9 +124,13 @@ const updateMascota = async (id, nombre, especie, raza, edad, genero) => {
 };
 
 
-const deleteById = () =>{
+const deleteById = async (id) =>{
+    try{
+        const mascota = await deleteById(id);
+        
+        }
 
-}
+};
 
 module.exports = { findAllMascotas, 
                 findByIdMascotas,
