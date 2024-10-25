@@ -5,7 +5,7 @@ const router  = express.Router();
 router.get('/', findAllMascotasController);
 router.get('/:id', findByIdMascotasController);
 router.post('/', createMascotaController );
-router.put('/update', updateMascotaController);
+router.put('/:id', updateMascotaController);
 
 
 
