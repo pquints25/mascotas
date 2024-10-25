@@ -128,6 +128,9 @@ const deleteById = async (id) =>{
     try{
         const mascota = await deleteById(id);
         
+        } catch(error){
+            console.log(error);
+            
         }
 
 };
