@@ -90,55 +90,56 @@ return {
 
 
 const updateMascota = async (id, nombre, especie, raza, edad, genero) => {
-    console.log('id recibido:', id);
-    console.log('datos recibido', { nombre,  especie, raza, edad, genero });
-    
-    
     try {
-        const mascota = await Mascotas.findByPk(id);
-        console.log('Mascota encontrada:', mascota);
+        // Log para verificar el ID que llega
+        console.log('Buscando mascota con ID:', id, 'Tipo:', typeof id);
         
+        // Primero hacemos un findByPk y mostramos el resultado
+        const mascota = await Mascotas.findByPk(id);
+        console.log('Resultado de búsqueda:', mascota);
+
         if (!mascota) {
+            console.log('No se encontró mascota con ID:', id);
             return {
-                msg: 'Mascota no encontrada',
+                msg: `No se encontró mascota con ID: ${id}`,
                 status: 404,
-                datos: []
+                datos: null
             };
         }
-        mascota.nombre = nombre;
-        mascota.especie = especie;
-        mascota.raza = raza;
-        mascota.edad = edad;
-        mascota.genero = genero;
 
-        await mascota.save(); 
+        // Si encontramos la mascota, mostramos sus datos actuales
+        console.log('Datos actuales de la mascota:', mascota.toJSON());
+
+        // Intentamos actualizar
+        await mascota.update({
+            nombre: nombre || mascota.nombre,
+            especie: especie || mascota.especie,
+            raza: raza || mascota.raza,
+            edad: edad || mascota.edad,
+            genero: genero || mascota.genero
+        });
+
+        // Verificamos que se guardó correctamente
+        const mascotaActualizada = await Mascotas.findByPk(id);
+        console.log('Datos después de actualizar:', mascotaActualizada.toJSON());
 
         return {
-            msg: 'Mascota actualizada con éxito',
+            msg: 'Mascota actualizada exitosamente',
             status: 200,
-            datos: mascota.toJSON()
+            datos: mascotaActualizada.toJSON()
         };
     } catch (error) {
-        console.log('Error al actualizar la mascota', error);
+        console.error('Error detallado:', error);
         return {
-            msg: 'Error como siempre',
+            msg: 'Error al actualizar la mascota',
             status: 500,
-            datos: []
+            datos: null,
+            error: error.message
         };
     }
 };
 
 
-const deleteById = async (id) =>{
-    try{
-        const mascota = await deleteById(id);
-        
-        } catch(error){
-            console.log(error);
-            
-        }
-
-};
 
 module.exports = { findAllMascotas, 
                 findByIdMascotas,

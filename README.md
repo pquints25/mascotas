@@ -30,16 +30,15 @@ async function createMascotaController(req, res){
 }
 
 const updateMascotaController = async (req, res) => {
-    const id = req.query.id;
-    const nombre = req.body.nombre;
-    const especie = req.body.especie;
-    const raza = req.body.raza;
-    const edad = req.body.edad;
-    const genero = req.body.genero;
+    const id = Number(req.params.id); 
+    console.log('ID RECIBIDO:', id);
+    
+    const { nombre, especie, raza, edad, genero } = req.body;
+    console.log('Datos recibidos:', { nombre, especie, raza, edad, genero });
+    
     const respuesta = await updateMascota(id, nombre, especie, raza, edad, genero);
     
     res.status(respuesta.status).json(respuesta)
-
 }
 
 module.exports = {  findAllMascotasController,
@@ -224,8 +223,14 @@ return {
 
 
 const updateMascota = async (id, nombre, especie, raza, edad, genero) => {
+    console.log('id recibido:', id);
+    console.log('datos recibido', { nombre,  especie, raza, edad, genero });
+    
+    
     try {
         const mascota = await Mascotas.findByPk(id);
+        console.log('Mascota encontrada:', mascota);
+        
         if (!mascota) {
             return {
                 msg: 'Mascota no encontrada',
@@ -233,7 +238,6 @@ const updateMascota = async (id, nombre, especie, raza, edad, genero) => {
                 datos: []
             };
         }
-
         mascota.nombre = nombre;
         mascota.especie = especie;
         mascota.raza = raza;
@@ -248,7 +252,7 @@ const updateMascota = async (id, nombre, especie, raza, edad, genero) => {
             datos: mascota.toJSON()
         };
     } catch (error) {
-        console.log(error);
+        console.log('Error al actualizar la mascota', error);
         return {
             msg: 'Error como siempre',
             status: 500,
@@ -256,7 +260,6 @@ const updateMascota = async (id, nombre, especie, raza, edad, genero) => {
         };
     }
 };
-
 
 const deleteById = async (id) =>{
     try{
