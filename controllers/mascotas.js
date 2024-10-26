@@ -22,9 +22,13 @@ async function createMascotaController(req, res){
 }
 
 const updateMascotaController = async (req, res) => {
-    const id = req.params.id;
+    const id = Number(req.params.id); 
+    console.log('ID RECIBIDO:', id);
+    
     const { nombre, especie, raza, edad, genero } = req.body;
-    const respuesta = await updateMascota(nombre, especie, raza, edad, genero);
+    console.log('Datos recibidos:', { nombre, especie, raza, edad, genero });
+    
+    const respuesta = await updateMascota(id, nombre, especie, raza, edad, genero);
     
     res.status(respuesta.status).json(respuesta)
 }

@@ -4,7 +4,7 @@ const mascotas = require("../routes/mascotas");
 class Server {
     constructor(){
         this.app = express();
-        this.port = 3001;
+        this.port = 3000;
         this.middlewares();
         this.routes();
     }
