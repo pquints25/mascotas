@@ -1,5 +1,5 @@
 const { response } = require("express");
-const { findAllMascotas, findByIdMascotas, createMascota, updateMascota } = require("../service/mascotas");
+const { findAllMascotas, findByIdMascotas, createMascota, updateMascota, deleteMascota } = require("../service/mascotas");
 
 const findAllMascotasController = async (req, res) => {
     const respuesta = await findAllMascotas();
@@ -31,7 +31,18 @@ const updateMascotaController = async (req, res) => {
     const respuesta = await updateMascota(id, nombre, especie, raza, edad, genero);
     return res.status(respuesta.status).json(respuesta);
 };
+
+const deleteMascotaController = async (req, res) => {
+    const {id} = req.params;
+    const respuesta = await deleteMascota(id);
+    res.status(respuesta.status).json({
+        msg: respuesta.msg,
+        datos:respuesta.datos
+    });
+};
 module.exports = {  findAllMascotasController,
                     findByIdMascotasController,
                     createMascotaController,
-                    updateMascotaController };
+                    updateMascotaController,
+                    deleteMascotaController
+                };

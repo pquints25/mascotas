@@ -91,57 +91,69 @@ return {
 
 const updateMascota = async (id, nombre, especie, raza, edad, genero) => {
     try {
-        // Log para verificar el ID que llega
-        console.log('Buscando mascota con ID:', id, 'Tipo:', typeof id);
-        
-        // Primero hacemos un findByPk y mostramos el resultado
         const mascota = await Mascotas.findByPk(id);
-        console.log('Resultado de búsqueda:', mascota);
-
+    
         if (!mascota) {
-            console.log('No se encontró mascota con ID:', id);
             return {
                 msg: `No se encontró mascota con ID: ${id}`,
-                status: 404,
-                datos: null
+                status: 204,
+                datos: []
             };
         }
 
-        // Si encontramos la mascota, mostramos sus datos actuales
-        console.log('Datos actuales de la mascota:', mascota.toJSON());
+        mascota.nombre = nombre || mascota.nombre;
+        mascota.especie = especie || mascota.especie;
+        mascota.raza = raza || mascota.raza;
+        mascota.edad = edad || mascota.edad;
+        mascota.genero = genero || mascota.genero;
 
-        // Intentamos actualizar
-        await mascota.update({
-            nombre: nombre || mascota.nombre,
-            especie: especie || mascota.especie,
-            raza: raza || mascota.raza,
-            edad: edad || mascota.edad,
-            genero: genero || mascota.genero
-        });
-
-        // Verificamos que se guardó correctamente
-        const mascotaActualizada = await Mascotas.findByPk(id);
-        console.log('Datos después de actualizar:', mascotaActualizada.toJSON());
+        await mascota.save();
 
         return {
             msg: 'Mascota actualizada exitosamente',
             status: 200,
-            datos: mascotaActualizada.toJSON()
+            datos: mascota
         };
     } catch (error) {
-        console.error('Error detallado:', error);
+        console.log(error.message);
         return {
             msg: 'Error al actualizar la mascota',
             status: 500,
-            datos: null,
-            error: error.message
+            datos: []
         };
     }
 };
 
+const deleteMascota = async (id) => {
+try{
+    const mascota = await Mascotas.findByPk(id);
+    if(!mascota){
+        return{
+            msg: `No se encontro la mascota asociada al ${id}`,
+            status: 204,
+            datos: []
+        };
+    }
+    await mascota.destroy();
 
+    return{
+        msg: 'Mascota eliminada exitosamente',
+        status: 200,
+        datos: []
+    };
+} catch (error){
+    console.log('Error', error);
+    return{
+        msg: 'Error en el servidor',
+        status: 500,
+        datos: []
+        };
+    }
+}
 
 module.exports = { findAllMascotas, 
                 findByIdMascotas,
                 createMascota,
-                updateMascota   };
+                updateMascota,
+                deleteMascota 
+                };
