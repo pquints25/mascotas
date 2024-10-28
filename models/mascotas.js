@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../connection/connection");
-
+const Dueno = require('./duenos');
 
 const Mascotas = sequelize.define('Mascotas', {
     id: {
@@ -27,10 +27,22 @@ const Mascotas = sequelize.define('Mascotas', {
     genero: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    id_dueno: { 
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 }, {
     tableName: 'mascotas',
     timestamps: false
 });
+
+Dueno.hasMany(Mascotas, {
+    foreignKey: 'id_dueno'
+});
+Mascotas.belongsTo(Dueno, {
+    foreignKey: 'id_dueno'
+});
+
 
 module.exports = Mascotas;

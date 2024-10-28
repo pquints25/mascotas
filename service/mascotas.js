@@ -1,8 +1,11 @@
+const Dueno = require("../models/duenos");
 const Mascotas = require("../models/mascotas");
 
 const findAllMascotas = async () => {
 try{
-    const mascotas = await Mascotas.findAll();
+    const mascotas = await Mascotas.findAll({
+        include: Dueno
+    });
     if(mascotas.length === 0){
         return {
             msg: 'No hay datos en la tabla❌',
@@ -39,7 +42,7 @@ try{
     }
 
     return{
-        msg: 'Encontramos tu mascota 🐱‍🏍',
+        msg: `Los datos de la mascota con id ${id} son :`,
         status: 200,
         datos: mascota.toJSON()
     };
@@ -55,9 +58,9 @@ try{
 
 
 
-const createMascota =  async (nombre, especie, raza, edad, genero) => {
+const createMascota =  async (nombre, especie, raza, edad, genero, id_dueno) => {
 try{
-    if(!nombre || !especie || !raza || edad == null || !genero){
+    if(!nombre || !especie || !raza || edad == null || !genero || !id_dueno){
         return {
             msg: 'Todos los datos son obligatorios',
             status: 400,
@@ -70,11 +73,12 @@ const mascota = await Mascotas.create({
     especie,
     raza,
     edad,
-    genero
+    genero,
+    id_dueno
 });
 
 return {
-    msg: `La mascota ${nombre} de especie ${especie}, raza ${raza}, edad ${edad} años y ${genero} se ha creado con exito`,
+    msg: `La mascota ${nombre} de especie ${especie}, raza ${raza}, edad ${edad} años, ${genero} y ${id_dueno} se ha creado con exito`,
     status: 201,
     datos: mascota.toJSON()
         }
@@ -151,7 +155,8 @@ try{
     }
 }
 
-module.exports = { findAllMascotas, 
+module.exports = { 
+                findAllMascotas, 
                 findByIdMascotas,
                 createMascota,
                 updateMascota,

@@ -6,7 +6,6 @@ server.listen();
 
 
 
-
 /* PRIMER PASO PARA SINCRONIZAR BBDD const Mascotas = require("./models/mascotas");
 
 Mascotas.sync();

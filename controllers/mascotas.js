@@ -13,8 +13,8 @@ const findByIdMascotasController = async (req, res) => {
 }
 
 async function createMascotaController(req, res){
-    const { nombre, especie, raza, edad, genero } = req.body;
-    const respuesta = await createMascota(nombre,especie,raza,edad,genero);
+    const { nombre, especie, raza, edad, genero, id_dueno } = req.body;
+    const respuesta = await createMascota(nombre,especie,raza,edad,genero,id_dueno);
     return res.status(respuesta.status).json({
         msg: respuesta.msg,
         datos: respuesta.datos
