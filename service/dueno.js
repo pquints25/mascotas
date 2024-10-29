@@ -1,9 +1,9 @@
-const Dueno = require("../models/duenos")
+const dueno = require("../models/dueno")
 const Mascotas = require("../models/mascotas")
 
 const findAllDueno = async () => {
 try {
-    const duenos = await Dueno.findAll({
+    const duenos = await dueno.findAll({
         include: Mascotas
     });
     return {

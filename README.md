@@ -540,3 +540,10 @@ VALUES(3,'15547123-3', 'Sydney', 'Sweeney');
         return dato.toJSON();
     }));
 });*/
+
+
+
+                <td>${mascotas.rut.Dueno}</td>
+                <td>${mascotas.nombre.Dueno}</td>
+                <td>${mascotas.apellido.Dueno}</td>
+revisar como estan y asignar dueño a las otras mascotas

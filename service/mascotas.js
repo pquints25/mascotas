@@ -1,24 +1,18 @@
-const Dueno = require("../models/duenos");
+const dueno = require("../models/dueno");
 const Mascotas = require("../models/mascotas");
 
 const findAllMascotas = async () => {
 try{
     const mascotas = await Mascotas.findAll({
-        include: Dueno
+        include: dueno
     });
-    if(mascotas.length === 0){
-        return {
-            msg: 'No hay datos en la tabla❌',
-            status: 204,
-            datos: []
-        }
-    }
-        return {
+
+        return  {
             msg: 'Las mascotas encontradas son 🐾:',
             status: 200,
             datos: mascotas.map(mascotas => mascotas.toJSON())
         }
-        
+
     } catch(error){
         console.log(error.message);
         return{

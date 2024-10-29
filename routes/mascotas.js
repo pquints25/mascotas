@@ -1,6 +1,5 @@
 const express = require('express');
 const {findAllMascotasController, findByIdMascotasController, createMascotaController, updateMascotaController, deleteMascotaController} = require("../controllers/mascotas");
-const { deleteMascota } = require('../service/mascotas');
 const router  = express.Router();
 
 router.get('/', findAllMascotasController);
