@@ -1,7 +1,8 @@
 import { construirTabla } from "./controlDOM.js";
 import { findAllMascotasAxios, findAllMascotasFetch } from "./solicitudes.js";
 
-construirTabla();
+const datos = await findAllMascotasAxios();
+construirTabla(datos);
 
 
 
