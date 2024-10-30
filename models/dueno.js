@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../connection/connection");
 
-const duenos = sequelize.define('Dueno', {
+const Dueno = sequelize.define('Dueno', {
     id: {
         primaryKey: true,
         autoIncrement: true,
@@ -23,4 +23,4 @@ const duenos = sequelize.define('Dueno', {
     tableName: 'duenos',
     timestamps: false
 });
-module.exports = duenos;
+module.exports = Dueno;

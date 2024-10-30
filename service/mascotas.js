@@ -1,10 +1,10 @@
-const dueno = require("../models/dueno");
+const Dueno = require("../models/dueno");
 const Mascotas = require("../models/mascotas");
 
 const findAllMascotas = async () => {
 try{
     const mascotas = await Mascotas.findAll({
-        include: dueno
+        include: Dueno
     });
 
         return  {
@@ -25,8 +25,9 @@ try{
 
 const findByIdMascotas = async (id) => {
 try{
-    const mascota = await Mascotas.findByPk(id);
-
+    const mascota = await Mascotas.findByPk(id, {
+    include: Dueno
+});
     if(!mascota){
         return{
             msg: 'Mascota perdida😢',
@@ -63,6 +64,7 @@ try{
     }
 
 const mascota = await Mascotas.create({
+    include:Dueno,
     nombre,
     especie,
     raza,
@@ -89,7 +91,9 @@ return {
 
 const updateMascota = async (id, nombre, especie, raza, edad, genero) => {
     try {
-        const mascota = await Mascotas.findByPk(id);
+        const mascota = await Mascotas.findByPk(id, {
+            include: Dueno
+        });
     
         if (!mascota) {
             return {
@@ -132,7 +136,14 @@ try{
             datos: []
         };
     }
-    await mascota.destroy();
+    await mascota.destroy({
+        where:{
+            id
+        }
+    });
+    const mascotas = await Mascota.findAll({
+        include: Dueno
+    });
 
     return{
         msg: 'Mascota eliminada exitosamente',

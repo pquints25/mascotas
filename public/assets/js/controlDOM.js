@@ -34,19 +34,18 @@ const construirTabla = async (datos) => {
 </div>`
     const cuerpoTabla = document.querySelector('#cuerpoTabla');
     cuerpoTabla.innerHTML = '';
-    datos.forEach(mascotas => {
+    datos.forEach(mascota => {
         cuerpoTabla.innerHTML += `<tr>
-                <td>${mascotas.nombre}</td>
-                <td>${mascotas.raza}</td>
-                <td>${mascotas.edad}</td>
-                <td>${mascotas.especie}</td>
-                <td>${mascotas.genero}</td>
-                <td>${mascotas.duenos ? mascotas.duenos.rut : 'No rut'}</td>
-                <td>${mascotas.duenos ? mascotas.duenos.nombre: 'No nombre'}</td>
-                <td>${mascotas.duenos ? mascotas.duenos.apellido: 'No apellido'}</td>
+                <td>${mascota.nombre}</td>
+                <td>${mascota.raza}</td>
+                <td>${mascota.edad}</td>
+                <td>${mascota.especie}</td>
+                <td>${mascota.genero}</td>
+                <td>${mascota.Dueno.rut}</td>
+                <td>${mascota.Dueno.nombre}</td>
+                <td>${mascota.Dueno.apellido}</td>
             </tr>`
         });
-    
 
     const btnBuscar = document.querySelector('#btnBuscar');
     btnBuscar.addEventListener('click', async () => {
